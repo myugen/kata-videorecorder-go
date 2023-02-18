@@ -9,19 +9,27 @@ type Controller struct {
 	recorders []devices.Recorder
 }
 
-func (c Controller) CheckSensors() {
-	sensorsDetectSomething := false
+func (c Controller) Scan() {
+	someSensorsDetectedMovement := c.checkAllSensors()
+
+	if someSensorsDetectedMovement {
+		c.startRecordingAllCameras()
+	}
+}
+
+func (c Controller) checkAllSensors() bool {
 	for _, sensor := range c.sensors {
 		sensorStatus := sensor.Detect()
 		if sensorStatus == devices.MovementDetected {
-			sensorsDetectSomething = true
+			return true
 		}
 	}
+	return false
+}
 
-	if sensorsDetectSomething {
-		for _, recorder := range c.recorders {
-			recorder.StartRecording()
-		}
+func (c Controller) startRecordingAllCameras() {
+	for _, recorder := range c.recorders {
+		recorder.StartRecording()
 	}
 }
 
