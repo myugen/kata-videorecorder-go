@@ -3,9 +3,9 @@ package kata_test
 import (
 	"testing"
 
-	"github.com/AgileCraftsmanshipCanarias/kata-setup-go/kata"
-	"github.com/AgileCraftsmanshipCanarias/kata-setup-go/kata/mocks"
 	"github.com/golang/mock/gomock"
+	"github.com/myugen/kata-videorecorder-go/kata"
+	"github.com/myugen/kata-videorecorder-go/kata/mocks"
 	"github.com/stretchr/testify/assert"
 )
 
