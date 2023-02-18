@@ -7,5 +7,6 @@ type Sensor interface {
 type SensorStatus = int
 
 const (
-	MovementDetected SensorStatus = iota
+	NoMovementDetected SensorStatus = iota
+	MovementDetected
 )

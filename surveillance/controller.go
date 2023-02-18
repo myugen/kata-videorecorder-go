@@ -14,6 +14,8 @@ func (c Controller) Scan() {
 
 	if someSensorsDetectedMovement {
 		c.startRecordingAllCameras()
+	} else {
+		c.stopRecordingAllCameras()
 	}
 }
 
@@ -30,6 +32,12 @@ func (c Controller) checkAllSensors() bool {
 func (c Controller) startRecordingAllCameras() {
 	for _, recorder := range c.recorders {
 		recorder.StartRecording()
+	}
+}
+
+func (c Controller) stopRecordingAllCameras() {
+	for _, recorder := range c.recorders {
+		recorder.StopRecording()
 	}
 }
 

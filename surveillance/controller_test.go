@@ -19,3 +19,13 @@ func TestController_ShouldStartRecording_WhenSomeSensorDetectsMovement(t *testin
 
 	assert.Equal(t, 1, camera.TimesOfPlayRecordingCalled())
 }
+
+func TestController_ShouldStopRecording_WhenAllSensorsDoNotDetectMovement(t *testing.T) {
+	sensor := new(sensorstub.NeverDetectingMovement)
+	camera := new(recordermock.VideoCamera)
+	controller := surveillance.NewController([]devices.Sensor{sensor}, []devices.Recorder{camera})
+
+	controller.Scan()
+
+	assert.Equal(t, 1, camera.TimesOfStopRecordingCalled())
+}
