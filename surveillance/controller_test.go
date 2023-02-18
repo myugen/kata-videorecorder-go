@@ -11,8 +11,8 @@ import (
 )
 
 func TestController_ShouldStartRecording_WhenSomeSensorDetectsMovement(t *testing.T) {
-	sensor := new(sensorstub.AlwaysDetectingMovement)
-	camera := new(recordermock.VideoCamera)
+	sensor := sensorstub.NewAlwaysDetectingMovement()
+	camera := recordermock.NewVideoCamera()
 	controller := surveillance.NewController([]devices.Sensor{sensor}, []devices.Recorder{camera})
 
 	controller.Scan()
@@ -21,8 +21,8 @@ func TestController_ShouldStartRecording_WhenSomeSensorDetectsMovement(t *testin
 }
 
 func TestController_ShouldStopRecording_WhenAllSensorsDoNotDetectMovement(t *testing.T) {
-	sensor := new(sensorstub.NeverDetectingMovement)
-	camera := new(recordermock.VideoCamera)
+	sensor := sensorstub.NewNeverDetectingMovement()
+	camera := recordermock.NewVideoCamera()
 	controller := surveillance.NewController([]devices.Sensor{sensor}, []devices.Recorder{camera})
 
 	controller.Scan()

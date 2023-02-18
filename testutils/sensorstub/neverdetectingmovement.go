@@ -8,3 +8,7 @@ type NeverDetectingMovement struct {
 func (s NeverDetectingMovement) Detect() devices.SensorStatus {
 	return devices.NoMovementDetected
 }
+
+func NewNeverDetectingMovement() *NeverDetectingMovement {
+	return &NeverDetectingMovement{}
+}

@@ -8,3 +8,7 @@ type AlwaysDetectingMovement struct {
 func (s AlwaysDetectingMovement) Detect() devices.SensorStatus {
 	return devices.MovementDetected
 }
+
+func NewAlwaysDetectingMovement() *AlwaysDetectingMovement {
+	return &AlwaysDetectingMovement{}
+}

@@ -20,3 +20,7 @@ func (v *VideoCamera) StartRecording() {
 func (v *VideoCamera) StopRecording() {
 	v.timesOfStopRecordingCalled += 1
 }
+
+func NewVideoCamera() *VideoCamera {
+	return &VideoCamera{}
+}
