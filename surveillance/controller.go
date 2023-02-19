@@ -12,11 +12,12 @@ type Controller struct {
 func (c Controller) Scan() {
 	someSensorsDetectedMovement := c.checkAllSensors()
 
+	recordCommandToRun := stopRecordCommandToRun
 	if someSensorsDetectedMovement {
-		c.startRecordingAllCameras()
-	} else {
-		c.stopRecordingAllCameras()
+		recordCommandToRun = startRecordCommandToRun
 	}
+
+	c.executeInAllRecorders(recordCommandToRun)
 }
 
 func (c Controller) checkAllSensors() bool {
@@ -29,15 +30,9 @@ func (c Controller) checkAllSensors() bool {
 	return false
 }
 
-func (c Controller) startRecordingAllCameras() {
+func (c Controller) executeInAllRecorders(command recorderCommandToRun) {
 	for _, recorder := range c.recorders {
-		recorder.StartRecording()
-	}
-}
-
-func (c Controller) stopRecordingAllCameras() {
-	for _, recorder := range c.recorders {
-		recorder.StopRecording()
+		command(recorder)
 	}
 }
 
