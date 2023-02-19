@@ -3,4 +3,4 @@ vendor/
 kata-setup-go
 main
 
-kata/mocks/
+*/mocks/
