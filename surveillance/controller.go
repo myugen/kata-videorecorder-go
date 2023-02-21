@@ -9,33 +9,28 @@ type Controller struct {
 	recorders []devices.Recorder
 }
 
-func (c Controller) Scan() {
-	someSensorsDetectedMovement := c.checkAllSensors()
-
-	recordCommandToRun := stopRecordCommandToRun
-	if someSensorsDetectedMovement {
-		recordCommandToRun = startRecordCommandToRun
+func (c *Controller) OnStatusChange(event devices.SensorEvent) {
+	recorderComandToRun := stopRecordCommandToRun
+	if event.IsMovementDetected() {
+		recorderComandToRun = startRecordCommandToRun
 	}
-
-	c.executeInAllRecorders(recordCommandToRun)
+	c.executeInAllRecorders(recorderComandToRun)
 }
 
-func (c Controller) checkAllSensors() bool {
-	for _, sensor := range c.sensors {
-		sensorStatus := sensor.Detect()
-		if sensorStatus == devices.MovementDetected {
-			return true
-		}
-	}
-	return false
-}
-
-func (c Controller) executeInAllRecorders(command recorderCommandToRun) {
+func (c *Controller) executeInAllRecorders(command recorderCommandToRun) {
 	for _, recorder := range c.recorders {
 		command(recorder)
 	}
 }
 
+func (c *Controller) withSensorsEventsSubscription() *Controller {
+	for _, sensor := range c.sensors {
+		sensor.Subscribe(c)
+	}
+	return c
+}
+
 func NewController(sensors []devices.Sensor, recorders []devices.Recorder) *Controller {
-	return &Controller{sensors: sensors, recorders: recorders}
+	instance := &Controller{sensors: sensors, recorders: recorders}
+	return instance.withSensorsEventsSubscription()
 }
